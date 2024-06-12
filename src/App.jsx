@@ -1,13 +1,27 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useEffect, useState } from "react";
 import "./App.css";
+import Forms from "./Forms";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [client, setClient] = useState(null);
+  useEffect(() => {
+    async function getClientData() {
+      const response = await fetch("/data.json");
+      const data = await response.json();
+      setClient(data[0]);
+    }
 
-  console.log("Hello");
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+    getClientData();
+  }, []);
+  return (
+    <div>
+      <h1 className="text-3xl font-bold underline">
+        {client ? client.name : "Hello world"}
+      </h1>
+      <Forms />
+    </div>
+  );
 }
 
 export default App;
