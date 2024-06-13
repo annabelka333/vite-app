@@ -21,7 +21,6 @@ function App() {
         {client ? client.name : "Hello world"}
       </h1>
       <Forms />
-      <Calendar />
     </div>
   );
 }
