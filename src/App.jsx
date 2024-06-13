@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Forms from "./Forms";
+import Calendar from "./Calendar";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -20,6 +21,7 @@ function App() {
         {client ? client.name : "Hello world"}
       </h1>
       <Forms />
+      <Calendar />
     </div>
   );
 }

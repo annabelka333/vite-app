@@ -1,4 +1,8 @@
 export default function Forms() {
+  const handleClick = () => {
+    console.log("hello here");
+  };
+
   return (
     <div>
       <main>
@@ -35,7 +39,6 @@ export default function Forms() {
                   placeholder="+34"
                 />
               </div>
-
               <div class="mt-4">
                 <label
                   class="block text-gray-700 text-left font-bold mb-2"
@@ -65,7 +68,13 @@ export default function Forms() {
               </div>
             </div>
             <div>
-              <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark: bg-blue 600">
+              <button
+                onClick={handleClick}
+                class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4
+                focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5
+                me-2 mb-2 bg-blue 600"
+              >
+                {" "}
                 Next
               </button>
             </div>
