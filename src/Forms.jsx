@@ -1,11 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import NextButton from "./NextButton";
 import Calendar from "./Calendar";
 
 export default function Forms() {
   const [showCalendar, setShowCalendar] = useState(false);
+  const [formValues, setFormValues] = useState({
+    fullName: " ",
+    email: "",
+    phone: "",
+  });
 
-  const handleClick = () => {
-    setShowCalendar(true);
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+
+  useEffect(() => {
+    console.log("formValues changed:", formValues);
+    const allFieldsFilled = Object.values(formValues).every(
+      (value) => value.trim() !== ""
+    );
+    console.log("All fields filled:", allFieldsFilled);
+    setIsButtonEnabled(allFieldsFilled);
+  }, [formValues]);
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    if (isButtonEnabled) {
+      console.log("Button enable,showing calendar");
+
+      setShowCalendar(true);
+    } else {
+      console.log("Button not enabled, not showing calendar");
+    }
   };
 
   return (
@@ -23,14 +47,17 @@ export default function Forms() {
                 <div className="mb-4">
                   <label
                     className="block text-gray-700 text-left font-bold mb-2"
-                    htmlFor="username"
+                    htmlFor="fullName"
                   >
                     Full Name
                   </label>
                   <input
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="username"
+                    id="fullName"
                     type="text"
+                    name="fullName"
+                    value={formValues.fullName}
+                    onChange={handleChange}
                     placeholder="Full Name"
                   />
 
@@ -45,6 +72,9 @@ export default function Forms() {
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="phone"
                       type="tel"
+                      name="phone"
+                      value={formValues.phone}
+                      onChange={handleChange}
                       placeholder="+34"
                     />
                   </div>
@@ -59,6 +89,9 @@ export default function Forms() {
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="email"
                       type="email"
+                      name="email"
+                      value={formValues.email}
+                      onChange={handleChange}
                       placeholder="you@example.com"
                     />
                   </div>
@@ -76,16 +109,10 @@ export default function Forms() {
                     </select>
                   </div>
                 </div>
-                <div>
-                  <button
-                    onClick={handleClick}
-                    className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4
-                focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5
-                me-2 mb-2 bg-blue 600"
-                  >
-                    Next
-                  </button>
-                </div>
+                <NextButton
+                  handleClick={handleButtonClick}
+                  isButtonEnabled={isButtonEnabled}
+                />
               </form>
             </div>
           </div>
