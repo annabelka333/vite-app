@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import NextButton from "./NextButton";
+
 import Calendar from "./Calendar";
 
 export default function Forms() {
@@ -9,6 +9,31 @@ export default function Forms() {
     email: "",
     phone: "",
   });
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    setEmailError("");
+  };
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let isValid = true;
+
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address.");
+      isValid = false;
+    }
+
+    if (isValid) {
+      console.log("Form submitted", { email });
+    }
+  };
 
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
@@ -20,6 +45,15 @@ export default function Forms() {
     console.log("All fields filled:", allFieldsFilled);
     setIsButtonEnabled(allFieldsFilled);
   }, [formValues]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    console.log("Input changed:${name}=${value}");
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+  };
 
   const handleClick = (event) => {
     event.preventDefault();
@@ -43,7 +77,10 @@ export default function Forms() {
             <p>Please put your information below</p>
 
             <div className="flex justify-center">
-              <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+              <form
+                onSubmit={handleSubmit}
+                className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+              >
                 <div className="mb-4">
                   <label
                     className="block text-gray-700 text-left font-bold mb-2"
@@ -91,9 +128,11 @@ export default function Forms() {
                       type="email"
                       name="email"
                       value={formValues.email}
-                      onChange={handleChange}
+                      onChange={(handleChange, handleEmailChange)}
                       placeholder="you@example.com"
+                      required
                     />
+                    {emailError && <p style={{ color: "red" }}>{emailError}</p>}
                   </div>
                   <div className="inline-block relative w-64 mt-6">
                     <label
@@ -109,10 +148,18 @@ export default function Forms() {
                     </select>
                   </div>
                 </div>
-                <NextButton
-                  handleClick={handleButtonClick}
-                  isButtonEnabled={isButtonEnabled}
-                />
+                <button
+                  onClick={handleClick}
+                  className={`text-white font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2
+                         ${
+                           isButtonEnabled
+                             ? "bg-blue-600 hover:bg-blue-800 focus:ring-4"
+                             : "bg-gray-400 curor-not-allowed"
+                         }`}
+                  disabled={!isButtonEnabled}
+                >
+                  Next
+                </button>
               </form>
             </div>
           </div>
