@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-
+import FormField from "./components/FormField";
 import Calendar from "./Calendar";
-import { validateEmail } from "./utils/commons";
 import userValidation from "./validations/user.validation";
 
 export default function Forms() {
@@ -11,8 +10,6 @@ export default function Forms() {
     email: "",
     phone: "",
   });
-  // const [email, setEmail] = useState("");
-  // const [emailError, setEmailError] = useState("");
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -22,11 +19,6 @@ export default function Forms() {
     );
     setIsButtonEnabled(allFieldsFilled);
   }, [formValues]);
-
-  // const handleEmailChange = (event) => {
-  //   setEmail(event.target.value);
-  //   setEmailError("");
-  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -42,8 +34,7 @@ export default function Forms() {
     console.log("Form submitted", formValues);
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+  const handleChange = (name, value) => {
     setFormValues({
       ...formValues,
       [name]: value,
@@ -75,73 +66,41 @@ export default function Forms() {
               onSubmit={handleSubmit}
               className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
             >
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-left font-bold mb-2"
-                  htmlFor="fullName"
-                >
-                  Full Name
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="fullName"
-                  type="text"
-                  name="fullName"
-                  value={formValues.fullName}
-                  onChange={handleChange}
-                  placeholder="Full Name"
-                />
-                {"fullName" in errors && (
-                  <p style={{ color: "red" }}>{errors["fullName"]}</p>
-                )}
-              </div>
-              <div className="mt-4">
-                <label
-                  className="block text-gray-700 text-left font-bold mb-2"
-                  htmlFor="phone "
-                >
-                  Phone
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="phone"
-                  type="tel"
-                  name="phone"
-                  value={formValues.phone}
-                  onChange={handleChange}
-                  placeholder="999 988 877"
-                />
-                {"phone" in errors && (
-                  <p style={{ color: "red" }}>{errors["phone"]}</p>
-                )}
-              </div>
-              <div className="mt-4">
-                <label
-                  className="block text-gray-700 text-left font-bold mb-2"
-                  htmlFor="email "
-                >
-                  Email
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="email"
-                  type="email"
-                  name="email"
-                  value={formValues.email}
-                  onChange={handleChange}
-                  placeholder="you@example.com"
-                  required
-                />
-                {"email" in errors && (
-                  <p style={{ color: "red" }}>{errors["email"]}</p>
-                )}
-              </div>
+              <FormField
+                errorText={"fullName" in errors ? errors["fullName"] : ""}
+                hasError={"fullName" in errors}
+                lable={"Full name"}
+                name={"fullname"}
+                value={formValues.fullName}
+                onChange={handleChange}
+                placeholder={"Jhoe Doe"}
+              />
+              <FormField
+                errorText={"email" in errors ? errors["email"] : ""}
+                hasError={"email" in errors}
+                lable={"Email address"}
+                name={"email"}
+                value={formValues.email}
+                onChange={handleChange}
+                type={"email"}
+                placeholder={"email@example.com"}
+              />
+              <FormField
+                errorText={"phone" in errors ? errors["phone"] : ""}
+                hasError={"phone" in errors}
+                lable={"Phone number"}
+                name={"phone"}
+                value={formValues.phone}
+                onChange={handleChange}
+                type={"phone"}
+                placeholder={"654 776 667"}
+              />
               <div className="inline-block relative w-64 mt-6">
                 <label
                   className="block text-gray-700 text-left font-bold mb-2"
                   htmlFor="appointment"
                 >
-                  Choose your appointment
+                  Choose your service
                 </label>
                 <select className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                   <option>Dentist</option>
