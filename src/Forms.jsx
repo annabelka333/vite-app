@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import Calendar from "./pages/calendar.page";
 import FormField from "./components/FormField";
-import Calendar from "./Calendar";
+
 import userValidation from "./validations/user.validation";
 
 export default function Forms() {
@@ -70,7 +71,7 @@ export default function Forms() {
                 errorText={"fullName" in errors ? errors["fullName"] : ""}
                 hasError={"fullName" in errors}
                 lable={"Full name"}
-                name={"fullname"}
+                name={"fullName"}
                 value={formValues.fullName}
                 onChange={handleChange}
                 placeholder={"Jhoe Doe"}
