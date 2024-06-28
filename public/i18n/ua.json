@@ -1,0 +1,11 @@
+{
+  "ItsTooShort": "Занадто короткий",
+  "ItsTooLong": "Це занадто довго",
+  "IncorrectFormat": "Неправильний формат",
+  "ChooseYourService": "Оберіть свій сервіс",
+  "Next": "Далі",
+  "FullName": "Повна назва",
+  "EmailAddress": "Адрес @ пошти",
+  "PhoneNumber": "Номер телефону",
+  "Minute": "хв"
+}

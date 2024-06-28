@@ -1,9 +1,14 @@
-import { Outlet } from "react-router-dom";
-//to do: create greeting components, footer and header component 
-export default () => {
+import { Outlet } from 'react-router-dom';
+import LangComponent from '../components/LangComponent';
+
+function MainLayout () {
+  //TODO: create greeting components, footer and header component 
+
   return (
     <>
-      <header>Header</header>
+      <header>
+        <LangComponent />
+      </header>
       <main>
         <Outlet/>
       </main>
@@ -12,4 +17,6 @@ export default () => {
       </footer>
     </>
   );
-};
+}
+
+export default MainLayout;
