@@ -1,0 +1,10 @@
+[{
+    "items": [{
+      "_id": "667d2ce5ba147672a29b4b44",
+      "name": "First Consultation",
+      "price": 60,
+      "discount": 0,
+      "duration": 15
+    }],
+    "total": 2
+}]
