@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './App.css';
 import HomePage from './pages/home.page.jsx';
 import ErrorPage from './pages/error.page.jsx';
 import AppointmentPage from './pages/appointment.page.jsx';

@@ -11,8 +11,10 @@ import { apiGet } from '../utils/api';
 export const appContext = createContext({
   user: undefined,
   services: undefined,
-  changeLanguage: undefined,
   loading: true,
+  selectedService: undefined,
+  setUserData: () => undefined,
+  pickService: () => undefined
 });
 
 export function useAppContext() {
@@ -32,6 +34,7 @@ export function useProvideAppContext() {
   const [state, setState] = useState({
     services: undefined,
     user: undefined,
+    selectedService: undefined,
     loading: true,
   });
 
@@ -47,8 +50,20 @@ export function useProvideAppContext() {
     } catch (err) {
       console.log(err);
     } finally {
-      setState({ ...newState, loading: false });
+      //Its a fake DATA
+
+      const user = {
+        fullName: 'Ruslan Krasiy',
+        email: 'krasiyruslan@gmail.com',
+        phone: '675668859',
+        state: true,
+      };
+
+      setState({ ...newState, loading: false, user, selectedService: '665f243c21cf523f098b431d' });
     }
+
+
+
   }, []);
 
 
@@ -56,8 +71,17 @@ export function useProvideAppContext() {
     intitDataLoading();
   }, []);
 
+  const setUserData = (data) => {
+    setState({...state, user: data});
+  };
 
-  console.log(state);
+  const pickService = (value) => {
+    setState({...state, selectedService: value});
+  };
 
-  return state;
+  return {
+    ...state,
+    setUserData,
+    pickService
+  };
 }

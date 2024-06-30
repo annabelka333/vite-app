@@ -2,7 +2,7 @@ import {
   validateEmail,
   validateFullName,
   validatePhone,
-} from "../utils/commons";
+} from '../utils/commons';
 
 /*
     fullName: "Jhoe Doe",
@@ -26,15 +26,15 @@ function userValidation(user) {
 
 const patterns = [
   {
-    name: "fullName",
+    name: 'fullName',
     validation: validateFullName,
   },
   {
-    name: "email",
+    name: 'email',
     validation: validateEmail,
   },
   {
-    name: "phone",
+    name: 'phone',
     validation: validatePhone,
   },
 ];

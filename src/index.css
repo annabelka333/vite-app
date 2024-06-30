@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+#root{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main{
+  flex-grow: 1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.calendar :nth-child(7n + 7),
+.calendar :nth-child(7n + 6) {
+  pointer-events: none;
+  background-color: rgb(255, 195, 195);
+}

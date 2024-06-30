@@ -13,7 +13,7 @@ function MainLayout () {
         <Outlet/>
       </main>
       <footer>
-        Made by Anna V.
+        Developed by Anna V.
       </footer>
     </>
   );

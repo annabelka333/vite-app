@@ -11,13 +11,12 @@ const LangComponent = () => {
     localStorage.setItem(LANG, lang);
   };
 
-
   return (
     <>
       {
         LANGUAGES.map(({code, label}) => (
           <button 
-            className={`py-1 px-2 bg-slate-200 mx-2 ${ code === i18n.language ? 'bg-green-100' : ''}`}
+            className={`py-1 px-2 mx-2 ${ code === i18n.language ? 'bg-green-100' : 'bg-slate-200'}`}
             key={code} 
             onClick={()=> changeLanguage(code)}>
             {t(label)}
