@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import FormField from './FormField';
+import { useState, useEffect } from 'react'
+import FormField from './FormField'
 
 import userValidation from '../validations/user.validation';
 import { useAppContext } from '../context/app.context';
