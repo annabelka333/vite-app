@@ -17,8 +17,8 @@ main{
   box-sizing: border-box;
 }
 
-.calendar :nth-child(7n + 7),
-.calendar :nth-child(7n + 6) {
+/* .calendar-shadow :nth-child(7n + 7),
+.calendar-shadow :nth-child(7n + 6) {
   pointer-events: none;
   background-color: rgb(255, 195, 195);
-}
+} */

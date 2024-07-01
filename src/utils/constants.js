@@ -10,3 +10,8 @@ export const LANGUAGES = [
   { label: 'Ukranian', code: 'ua' },
 ];
 
+export const LOCALE = {
+  es: { label: 'Spanish', code: 'es-ES' },
+  en: { label: 'English', code: 'en-EN' },
+  ua: { label: 'Ukranian', code: 'uk-UA' },
+};

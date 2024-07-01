@@ -7,5 +7,8 @@
   "FullName": "Full name",
   "EmailAddress": "Email address",
   "PhoneNumber": "Phone Number",
-  "Minute": "min."
+  "Minute": "min.",
+  "Spanish": "Spanish",
+  "English": "English",
+  "Ukranian": "Ukranian"
 }
