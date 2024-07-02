@@ -13,6 +13,7 @@ export const appContext = createContext({
   services: undefined,
   changeLanguage: undefined,
   loading: true,
+  greeting: () => undefined
 });
 
 export function useAppContext() {
@@ -51,7 +52,9 @@ export function useProvideAppContext() {
     }
   }, []);
 
-
+  const greeting = (name) => {
+    console.log('Hello ', name);
+  };
   useEffect(() => {
     intitDataLoading();
   }, []);
@@ -59,5 +62,8 @@ export function useProvideAppContext() {
 
   console.log(state);
 
-  return state;
+  return {
+    ...state,
+    greeting
+  };
 }
