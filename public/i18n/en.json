@@ -1,11 +1,15 @@
 {
-  "ItsTooShort": "It's too short",
-  "ItsTooLong": "It's too long",
-  "IncorrectFormat": "Incorrect format",
-  "ChooseYourService": "Choose your service",
+  "Error.ItsTooShort": "It's too short",
+  "Error.ItsTooLong": "It's too long",
+  "Error.IncorrectFormat": "Incorrect format",
+  "Error.ChooseYourService": "Choose your service",
+  "Error.Empty": "Couldn't be empty",
   "Next": "Next",
   "FullName": "Full name",
   "EmailAddress": "Email address",
   "PhoneNumber": "Phone Number",
-  "Minute": "min."
+  "Minute": "min.",
+  "Spanish": "Spanish",
+  "English": "English",
+  "Ukranian": "Ukranian"
 }
