@@ -1,20 +1,22 @@
-import { useState, useEffect } from 'react'
-import FormField from './FormField'
+import { useState, useEffect } from 'react';
+import FormField from './FormField';
 
 import userValidation from '../validations/user.validation';
 import { useAppContext } from '../context/app.context';
 import { useTranslation } from 'react-i18next';
 
-export default function Forms({callback}) {
+export default function UserForm({callback}) {
   const {t} = useTranslation();
   const [formValues, setFormValues] = useState({
     fullName: '',
     email: '',
     phone: '',
+    service: '',
+    receiveNotification: true,
   });
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [errors, setErrors] = useState({});
-  const {user, services} = useAppContext();
+  const {services} = useAppContext();
 
   useEffect(() => {
     const allFieldsFilled = Object.values(formValues).every(
@@ -43,6 +45,13 @@ export default function Forms({callback}) {
     setFormValues({
       ...formValues,
       [name]: value,
+    });
+  };
+
+  const checkBoxHandler = (event) => {
+    setFormValues({
+      ...formValues,
+      [event.target.name]: event.target.checked,
     });
   };
 
@@ -95,21 +104,32 @@ export default function Forms({callback}) {
           </label>
           {
             services ? (
-              <select className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+              <>
+                <select 
+                  name='service'
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                  <option value={''}>None</option>
+                  {
+                    services.items.map(service => (
+                      <option key={service._id} value={service._id}>{service.name} - {service.price}€ ( {service.duration}{t('Minute')} )</option>
+                    ))
+                  }
+                </select>
                 {
-                  services.items.map(service => (
-                    <option key={service._id}>{service.name} - {service.price}€ ( {service.duration}{t('Minute')} )</option>
-                  ))
+                  'service' in errors ? <span className='text-red-500'>{t(errors.service)}</span> : null
                 }
-              </select>
+              </>
             ) : null
           }
+        </div>
+        <div>
+          <input type='checkbox' checked={formValues.receiveNotification} name='receiveNotification' onChange={checkBoxHandler}/>
+          <label htmlFor="receiveNotification">{t('ReceiveNotifications')}</label>
         </div>
         <hr />
         <button
           type="submit"
           className={`text-white font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 ${btnClass}`}
-          disabled={!isButtonEnabled}
         >
           {t('Next')}
         </button>

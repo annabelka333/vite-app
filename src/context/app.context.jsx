@@ -5,15 +5,17 @@ import {
   useEffect,
   useState
 } from 'react';
-import { getUserToken } from '../utils/commons';
 import { apiGet } from '../utils/api';
+import { USERIDSTORAGE } from '../utils/constants';
 
 export const appContext = createContext({
   user: undefined,
   services: undefined,
-  changeLanguage: undefined,
   loading: true,
-  greeting: () => undefined
+  selectedService: undefined,
+  showCalendar: false,
+  setUserData: () => undefined,
+  pickService: () => undefined
 });
 
 export function useAppContext() {
@@ -33,37 +35,40 @@ export function useProvideAppContext() {
   const [state, setState] = useState({
     services: undefined,
     user: undefined,
+    selectedService: undefined,
     loading: true,
+    showCalendar: false,
   });
 
   const intitDataLoading = useCallback(async () => {
-    const userToken = getUserToken();
+    const uid = localStorage.getItem(USERIDSTORAGE);
     const newState = state;
 
     try {
-      if (userToken) {
-        newState.user = await apiGet('user/' + userToken.id);
+      if (uid) {
+        newState.user = await apiGet('appointments/' + uid);
       }
       newState.services = await apiGet('services');
     } catch (err) {
       console.log(err);
     } finally {
-      setState({ ...newState, loading: false });
+      setState({ ...newState, loading: false});
     }
+
   }, []);
 
-  const greeting = (name) => {
-    console.log('Hello ', name);
+  const confirmUserData = (data) => {
+    const {service, ...user} = data;
+    localStorage.setItem(USERIDSTORAGE, user.uid);
+    setState({...state, user: user, selectedService: service, showCalendar: true});
   };
+
   useEffect(() => {
     intitDataLoading();
   }, []);
 
-
-  console.log(state);
-
   return {
     ...state,
-    greeting
+    confirmUserData
   };
 }

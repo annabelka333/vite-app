@@ -1,28 +1,21 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LANG, LANGUAGES } from '../utils/constants';
-import { useAppContext } from '../context/app.context';
+import { LANG, LOCALE } from '../utils/constants';
 
 const LangComponent = () => {
   const { i18n, t } = useTranslation();
-  const context = useAppContext();
-  console.log('Context', context.loading);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  
-  
-  
+    
   const changeLanguage = (lang) => {
-    console.log({ lang });
-    context.greeting('Roma');
     i18n.changeLanguage(lang);
     localStorage.setItem(LANG, lang);
     setIsOpen(false);
   };
 
   const toggleDropdown = () => setIsOpen(!isOpen);
-  const currentLanguageLabel = LANGUAGES.find(lang => lang.code === i18n.language)?.label || 'Language';
+  const currentLanguageLabel = LOCALE[i18n.language].label || 'Language';
   const currentLanguageCode = i18n.language;
   const buttonBgColor = currentLanguageLabel === 'en' ? 'bg-green-200' : currentLanguageCode === 'es' ? 'bg-gree-200' : 'bg-green-200';
 
@@ -38,17 +31,17 @@ const LangComponent = () => {
     };
   }, [dropdownRef]);
   
- return (
-    <div className="relative inline-block text-left" ref={dropdownRef}>
+  return (
+    <div className="relative flex px-4 pt-2 justify-end" ref={dropdownRef}>
       <button
         type="button"
-        className = {`inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ouline-no focus:ring-2 focus:ring-offset-2 focus:indigo-500 ${buttonBgColor}`}
+        className = {`flex-justify-center items-center-gap-2 w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ouline-none focus:ring-2 focus:ring-offset-2 focus:indigo-500 ${buttonBgColor}`}
         onClick={toggleDropdown}
       >
   
-        {t(currentLanguageLabel)}
+        {t(currentLanguageLabel).substring(0, 3)}
         <svg
-          className="-mr-1 h-5 w-5 text-gray-400"
+          className="h-5 w-5 text-gray-400"
           viewBox="0 0 20 20"
           fill="currentColor"
           aria-hidden="true"
@@ -62,28 +55,24 @@ const LangComponent = () => {
       </button>
 
       {isOpen && (
-        <div
-          className = "origin-top-right absolute right-0 z-10 mt-2 w-56 rounded-md bg-white shadow-lf ring-1 ring-black ring-opacity-5 focus:outline-none"
+        <ul
+          className="origin-top-right absolute right-4 top-full z-10 mt-2 w-56 rounded-md bg-white shadow-lf ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
-          aria-orintation="vertical"
           aria-labelledby="menu-button"
-          tabIndex="-1"
         >
-          <div className="py-1" role="none">
-            {LANGUAGES.map(({ code, label }) => (
-              <button
-                className={`block px-4 py-2 text-m text gray-700 hover;bg-gray-100 w-full text-left ${
-                  code === i18n.language ? "bg-green-100" : ""
-                }`}
-                key={code}
-                role="menuitem"
-                onClick={() => changeLanguage(code)}
-              >
-                {t(label)}
-              </button>
-            ))}
-          </div>
-        </div>
+          {Object.keys(LOCALE).map(key => (
+            <li
+              className={`cursor-pointer px-4 py-2 text-m text-gray-700 hover:bg-gray-100 w-full ${
+                key === currentLanguageCode ? 'bg-green-100' : ''
+              }`}
+              key={key}
+              role="menuitem"
+              onClick={() => changeLanguage(key)}
+            >
+              {t(LOCALE[key].label)}
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
