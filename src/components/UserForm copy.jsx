@@ -16,7 +16,7 @@ export default function UserForm({callback}) {
   });
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [errors, setErrors] = useState({});
-  const {user, services} = useAppContext();
+  const {services} = useAppContext();
 
   useEffect(() => {
     const allFieldsFilled = Object.values(formValues).every(

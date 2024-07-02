@@ -1,13 +1,14 @@
 export const BaseUrl = 'http://localhost/api'; 
 
 export const KEYSESSIONSTORAGE = 'SCHT::TOKEN';
+export const USERIDSTORAGE = 'SCHT::UID';
 
 export const LANG = 'SCHT::LANG';
 
 export const LANGUAGES = [
-  { label: 'Spanish', code: 'es' },
+  { label: 'Español ', code: 'es' },
   { label: 'English', code: 'en' },
-  { label: 'Ukranian', code: 'ua' },
+  { label: 'Українська', code: 'ua' },
 ];
 
 export const LOCALE = {

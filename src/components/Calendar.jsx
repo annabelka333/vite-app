@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LOCALE } from '../utils/constants';
-import { ChevronLeftIcon, ChevronRightIcon } from './icons';
+import { ChevronLeftIcon, ChevronRightIcon } from './icons/icons';
 
 const Calendar = () => {
   const {i18n} = useTranslation();

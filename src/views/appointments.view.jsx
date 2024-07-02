@@ -1,11 +1,9 @@
 import Calendar from '../components/Calendar';
+import Loader from '../components/loader';
 import { useAppContext } from '../context/app.context';
 import { useAppointments } from '../hooks/useAppointments.hook';
-import Loader from '../components/loader';
 
-
-
-const CalendarPage = () => {
+const AppointmentsView = () => {
   const {loading, appointments} = useAppointments();
   const {selectedService, user} = useAppContext();
 
@@ -32,4 +30,4 @@ const CalendarPage = () => {
   );
 };
 
-export default CalendarPage;
+export default AppointmentsView;

@@ -1,4 +1,3 @@
-import { KEYSESSIONSTORAGE } from './constants';
 
 export const validateEmail = (value) => {
   if(value.length === 0){
@@ -69,12 +68,4 @@ export function parseToken (token) {
   }).join(''));
 
   return JSON.parse(jsonPayload);
-}
-
-export function getUserToken(){
-  const token = localStorage.getItem(KEYSESSIONSTORAGE);
-  if(token)
-    return parseToken(token);
-
-  return null;
 }

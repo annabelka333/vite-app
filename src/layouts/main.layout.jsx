@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
 import LangComponent from '../components/LangComponent';
-
 function MainLayout () {
   //TODO: create greeting components, footer and header component 
 

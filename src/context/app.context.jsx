@@ -5,14 +5,15 @@ import {
   useEffect,
   useState
 } from 'react';
-import { getUserToken } from '../utils/commons';
 import { apiGet } from '../utils/api';
+import { USERIDSTORAGE } from '../utils/constants';
 
 export const appContext = createContext({
   user: undefined,
   services: undefined,
   loading: true,
   selectedService: undefined,
+  showCalendar: false,
   setUserData: () => undefined,
   pickService: () => undefined
 });
@@ -36,46 +37,38 @@ export function useProvideAppContext() {
     user: undefined,
     selectedService: undefined,
     loading: true,
+    showCalendar: false,
   });
 
   const intitDataLoading = useCallback(async () => {
-    const userToken = getUserToken();
+    const uid = localStorage.getItem(USERIDSTORAGE);
     const newState = state;
 
     try {
-      if (userToken) {
-        newState.user = await apiGet('users/' + userToken.uid);
+      if (uid) {
+        newState.user = await apiGet('appointments/' + uid);
       }
       newState.services = await apiGet('services');
     } catch (err) {
       console.log(err);
     } finally {
-      //Its a fake DATA
       setState({ ...newState, loading: false});
     }
 
-
-
   }, []);
 
+  const confirmUserData = (data) => {
+    const {service, ...user} = data;
+    localStorage.setItem(USERIDSTORAGE, user.uid);
+    setState({...state, user: user, selectedService: service, showCalendar: true});
+  };
 
   useEffect(() => {
     intitDataLoading();
   }, []);
 
-  const setUserData = (data) => {
-    setState({...state, user: data});
-  };
-
-  const pickService = (value) => {
-    setState({...state, selectedService: value});
-  };
-
-  console.log(state);
-
   return {
     ...state,
-    setUserData,
-    pickService
+    confirmUserData
   };
 }

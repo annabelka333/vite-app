@@ -1,4 +1,4 @@
-import { BaseUrl, KEYSESSIONSTORAGE } from './constants';
+import { BaseUrl } from './constants';
 export class ApiError extends Error {
   constructor(message, errors = []) {
     super(message);
@@ -45,10 +45,10 @@ export function getHeaders(header = {}) {
     'Content-Type': 'application/json',
   };
 
-  const Authorization = localStorage.getItem(KEYSESSIONSTORAGE);
-  if (Authorization) {
-    Object.assign(httpHeaders, { Authorization: `Bearer ${Authorization}` });
-  }
+  // const Authorization = localStorage.getItem(KEYSESSIONSTORAGE);
+  // if (Authorization) {
+  //   Object.assign(httpHeaders, { Authorization: `Bearer ${Authorization}` });
+  // }
 
   Object.entries(header).forEach(([key, value]) => {
     httpHeaders[key] = value;
