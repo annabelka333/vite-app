@@ -1,49 +1,61 @@
 import { KEYSESSIONSTORAGE } from './constants';
 
-export const validateEmail = (email) => {
-  const test = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
+export const validateEmail = (value) => {
+  if(value.length === 0){
+    return 'Error.Empty';
+  }
+  const test = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value).toLowerCase());
+  
   if (!test) {
-    return 'IncorrectFormat';
+    return 'Error.IncorrectFormat';
   }
 
   return null;
 };
 
-export const validatePhone = (phone) => {
+export const validatePhone = (value) => {
+  if(value.length === 0){
+    return 'Error.Empty';
+  }
+
   const test =
     /^\+?(\d{1,3})?[-.\s]?(\(?\d{3}\)?)[-.\s]?(\d{3})[-.\s]?(\d{4})$/.test(
-      String(phone).toLowerCase()
+      String(value).toLowerCase()
     );
 
   if (test) {
-    return 'IncorrectFormat';
+    return 'Error.IncorrectFormat';
   }
 
-  if (phone.length < 9) {
-    return 'ItsTooShort';
+  if (value.length < 9) {
+    return 'Error.ItsTooShort';
   }
 
-  if (phone.length > 9) {
-    return 'ItsTooLong';
+  if (value.length > 9) {
+    return 'Error.ItsTooLong';
   }
 
   return null;
 };
 
-export function validateFullName(fullname) {
+export function validateFullName(value) {
+  if(value.length === 0){
+    return 'Error.Empty';
+  }
+  
   const test =
     /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*(?:[-' ][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/;
 
   if (!test) {
-    return 'IncorrectFormat';
+    return 'Error.IncorrectFormat';
   }
 
-  if (fullname.length < 4) {
-    return 'ItsTooShort';
+  if (value.length < 4) {
+    return 'Error.ItsTooShort';
   }
 
-  if (fullname.length > 40) {
-    return 'ItsTooLong';
+  if (value.length > 40) {
+    return 'Error.ItsTooLong';
   }
 
   return null;

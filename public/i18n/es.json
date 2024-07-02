@@ -1,8 +1,9 @@
 {
-  "ItsTooShort": "Es muy corto",
-  "ItsTooLong": "Es muy largo",
-  "IncorrectFormat": "Formato incorrecto",
-  "ChooseYourService": "Elige un servicio",
+  "Error.ItsTooShort": "Es muy corto",
+  "Error.ItsTooLong": "Es muy largo",
+  "Error.IncorrectFormat": "Formato incorrecto",
+  "Error.ChooseYourService": "Elige un servicio",
+  "Error.Empty": "No puede estar vacio",
   "Next": "Siguente",
   "FullName": "Nombre completo",
   "EmailAddress": "Correo electrónico",

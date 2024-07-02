@@ -3,22 +3,29 @@
 @tailwind utilities;
 
 
-#root{
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+@layer base {
+  #root{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  main{
+    flex-grow: 1;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
 }
 
-main{
-  flex-grow: 1;
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .page-title{
+    @apply text-2xl tracking-wide mb-4;
+  }
 }
 
-* {
-  box-sizing: border-box;
-}
-
-/* .calendar-shadow :nth-child(7n + 7),
-.calendar-shadow :nth-child(7n + 6) {
-  pointer-events: none;
-  background-color: rgb(255, 195, 195);
-} */

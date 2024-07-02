@@ -44,22 +44,14 @@ export function useProvideAppContext() {
 
     try {
       if (userToken) {
-        newState.user = await apiGet('user/' + userToken.id);
+        newState.user = await apiGet('users/' + userToken.uid);
       }
       newState.services = await apiGet('services');
     } catch (err) {
       console.log(err);
     } finally {
       //Its a fake DATA
-
-      const user = {
-        fullName: 'Ruslan Krasiy',
-        email: 'krasiyruslan@gmail.com',
-        phone: '675668859',
-        state: true,
-      };
-
-      setState({ ...newState, loading: false, user, selectedService: '665f243c21cf523f098b431d' });
+      setState({ ...newState, loading: false});
     }
 
 
@@ -78,6 +70,8 @@ export function useProvideAppContext() {
   const pickService = (value) => {
     setState({...state, selectedService: value});
   };
+
+  console.log(state);
 
   return {
     ...state,

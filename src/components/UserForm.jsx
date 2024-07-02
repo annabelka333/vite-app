@@ -5,29 +5,28 @@ import userValidation from '../validations/user.validation';
 import { useAppContext } from '../context/app.context';
 import { useTranslation } from 'react-i18next';
 
-export default function Forms({callback}) {
+export default function UserForm({callback}) {
   const {t} = useTranslation();
   const [formValues, setFormValues] = useState({
     fullName: '',
     email: '',
     phone: '',
+    service: '',
+    receiveNotification: true,
   });
-  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [errors, setErrors] = useState({});
   const {user, services} = useAppContext();
 
   useEffect(() => {
-    const allFieldsFilled = Object.values(formValues).every(
-      (value) => value.trim() !== ''
-    );
-    setIsButtonEnabled(allFieldsFilled);
-  }, [formValues]);
+    if(user){
+      setFormValues({...formValues, ...user});
+    }
+  }, [user]); 
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const isValid = userValidation(formValues);
-    console.log(isValid);
 
     if (Object.keys(isValid).length > 0) {
       setErrors({ ...isValid });
@@ -36,7 +35,6 @@ export default function Forms({callback}) {
     
     callback(formValues);
 
-    console.log('Form submitted', formValues);
   };
 
   const handleChange = (name, value) => {
@@ -46,9 +44,12 @@ export default function Forms({callback}) {
     });
   };
 
-  const btnClass =  isButtonEnabled
-    ? 'bg-blue-600 hover:bg-blue-800 focus:ring-4'
-    : 'bg-gray-400 curor-not-allowed';
+  const checkBoxHandler = (event) => {
+    setFormValues({
+      ...formValues,
+      [event.target.name]: event.target.checked,
+    });
+  };
 
   return (
     <div className="flex justify-center">
@@ -95,21 +96,34 @@ export default function Forms({callback}) {
           </label>
           {
             services ? (
-              <select className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+              <>
+                <select 
+                  name='service'
+                  value={formValues.service}
+                  onChange={(event) => handleChange(event.target.name, event.target.value)}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                  <option value={''}>None</option>
+                  {
+                    services.items.map(service => (
+                      <option key={service._id} value={service._id}>{service.name} - {service.price}€ ( {service.duration}{t('Minute')} )</option>
+                    ))
+                  }
+                </select>
                 {
-                  services.items.map(service => (
-                    <option key={service._id}>{service.name} - {service.price}€ ( {service.duration}{t('Minute')} )</option>
-                  ))
+                  'service' in errors ? <span className='text-red-500'>{t(errors.service)}</span> : null
                 }
-              </select>
+              </>
             ) : null
           }
+        </div>
+        <div>
+          <input type='checkbox' checked={formValues.receiveNotification} name='receiveNotification' onChange={checkBoxHandler}/>
+          <label htmlFor="receiveNotification">{t('ReceiveNotifications')}</label>
         </div>
         <hr />
         <button
           type="submit"
-          className={`text-white font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 ${btnClass}`}
-          disabled={!isButtonEnabled}
+          className='text-white font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 bg-blue-600 hover:bg-blue-800 focus:ring-4'
         >
           {t('Next')}
         </button>

@@ -1,30 +1,41 @@
 import { useNavigate } from 'react-router-dom';
-import Forms from '../components/Forms';
+import UserForm from '../components/UserForm';
+import { ApiError, apiGet } from '../utils/api';
+import { KEYSESSIONSTORAGE } from '../utils/constants';
+import { useAppContext } from '../context/app.context';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const context = useAppContext();
 
   const checkAppointment = async (data) => {
     console.log('Hello, I am homepage', data);
 
     try {
-      // const response = await fetch('some', 'POST', data);
-      // const json = await response.json();
-      // app.addUser(json);
-      // navigate("/calendar");
-      throw new Error('You already have an appointment');
-    } catch (err) {
-      console.error(err);
-      console.info(err);
-      console.log(err);
-      navigate('/check-email');
+      const {token, uid} = await apiGet('appointments/user-validation', 'POST', data);
+
+
+      localStorage.setItem(KEYSESSIONSTORAGE, token);
+      context.setUserData({_id: uid, ...data});
+      context.pickService(data.service);
+
+      console.log(token, uid);
+      navigate('/calendar');
+    } catch (error) {
+      if (error instanceof ApiError) {
+        error.errors.forEach(err => {
+          console.error(`Error in ${err.path}: ${err.msg}`);
+        });
+      } else {
+        console.error('Unexpected error:', error.message);
+      }
     }
 
   };
 
   return (
     <div>
-      <Forms callback={checkAppointment} />
+      <UserForm callback={checkAppointment} />
     </div>
   );
 };

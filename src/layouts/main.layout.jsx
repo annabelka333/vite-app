@@ -10,7 +10,9 @@ function MainLayout () {
         <LangComponent />
       </header>
       <main>
-        <Outlet/>
+        <div className='container'>
+          <Outlet/>
+        </div>
       </main>
       <footer>
         Developed by Anna V.

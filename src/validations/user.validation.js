@@ -37,6 +37,15 @@ const patterns = [
     name: 'phone',
     validation: validatePhone,
   },
+  {
+    name: 'service',
+    validation: (value) => {
+      if(value.length === 0){
+        return 'Error.ChooseYourService';
+      }
+      return null;
+    },
+  }
 ];
 
 export default userValidation;

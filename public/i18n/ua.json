@@ -1,8 +1,9 @@
 {
-  "ItsTooShort": "Занадто короткий",
-  "ItsTooLong": "Це занадто довго",
-  "IncorrectFormat": "Неправильний формат",
-  "ChooseYourService": "Оберіть свій сервіс",
+  "Error.ItsTooShort": "Занадто короткий",
+  "Error.ItsTooLong": "Це занадто довго",
+  "Error.IncorrectFormat": "Неправильний формат",
+  "Error.ChooseYourService": "Оберіть свій сервіс",
+  "Error.Empty": "Не може бути порожнім",
   "Next": "Далі",
   "FullName": "Повна назва",
   "EmailAddress": "Адрес @ пошти",

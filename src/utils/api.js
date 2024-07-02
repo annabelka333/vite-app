@@ -1,29 +1,41 @@
 import { BaseUrl, KEYSESSIONSTORAGE } from './constants';
+export class ApiError extends Error {
+  constructor(message, errors = []) {
+    super(message);
+    this.name = 'ApiError';
+    this.errors = errors;
+  }
+}
 
 
 //POST,GET,PUT,DELETE  = CRUD
 export async function apiGet(from, method = 'GET', body) {
   const url = `${BaseUrl}/${from}`;
-  const header = new Headers();
+  const header = getHeaders();
 
   const options = {
     headers: header,
     method
   };
-
   if (body) {
-    Object.assign(options, { body: JSON.stringify(body) });
+    options.body = JSON.stringify(body);
   }
-
+  
   try {
     const response = await fetch(url, options);
-    const data = await response.json();
+    const contentType = response.headers.get('content-type');
+    if (!response.ok) {
+      if (contentType && contentType.indexOf('application/json') !== -1) {
+        const errorData = await response.json();
+        throw new ApiError('Server responded with an error', errorData.errors);
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    }
+    return await response.json();
 
-    return data;
-    
   } catch (error) {
-    //TODO: add Errors handing classes;
-    console.log(error);
+    console.error('Fetch error:', error);
     throw error;
   }
 }
@@ -33,14 +45,14 @@ export function getHeaders(header = {}) {
     'Content-Type': 'application/json',
   };
 
-  const Authorization = sessionStorage.getItem(KEYSESSIONSTORAGE);
+  const Authorization = localStorage.getItem(KEYSESSIONSTORAGE);
   if (Authorization) {
-    Object.assign(httpHeaders, { Authorization });
+    Object.assign(httpHeaders, { Authorization: `Bearer ${Authorization}` });
   }
 
-  if (header) {
-    Object.keys(header).map(key => Object.assign(httpHeaders, { [key]: header[key] }));
-  }
+  Object.entries(header).forEach(([key, value]) => {
+    httpHeaders[key] = value;
+  });
 
   return new Headers(httpHeaders);
 }
