@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LANG, LANGUAGES } from '../utils/constants';
 import { useAppContext } from '../context/app.context';
@@ -9,6 +9,7 @@ const LangComponent = () => {
   const context = useAppContext();
   console.log('Context', context.loading);
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
   
   
   
@@ -23,15 +24,25 @@ const LangComponent = () => {
   const toggleDropdown = () => setIsOpen(!isOpen);
   const currentLanguageLabel = LANGUAGES.find(lang => lang.code === i18n.language)?.label || 'Language';
   const currentLanguageCode = i18n.language;
-  const buttonBgColor = currentLanguageLabel === 'en' ? 'bg-green-200' : currentLanguageCode === 'es' ? 'bg-gree-200' : 'bg-green-100';
+  const buttonBgColor = currentLanguageLabel === 'en' ? 'bg-green-200' : currentLanguageCode === 'es' ? 'bg-gree-200' : 'bg-green-200';
 
-
-
-  return (
-    <div className="relative inline-block text-left">
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownRef]);
+  
+ return (
+    <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
         type="button"
-        className = {`inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-wh text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ouline-nono focus:ring-2 focus:ring-offset-2 focus:indigo-500 ${buttonBgColor}`}
+        className = {`inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ouline-nono focus:ring-2 focus:ring-offset-2 focus:indigo-500 ${buttonBgColor}`}
         onClick={toggleDropdown}
       >
   
@@ -56,7 +67,7 @@ const LangComponent = () => {
           role="menu"
           aria-orintation="vertical"
           aria-labelledby="menu-button"
-          tabindex="-1"
+          tabIndex="-1"
         >
           <div className="py-1" role="none">
             {LANGUAGES.map(({ code, label }) => (
