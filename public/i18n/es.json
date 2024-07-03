@@ -2,7 +2,7 @@
   "Error.ItsTooShort": "Es muy corto",
   "Error.ItsTooLong": "Es muy largo",
   "Error.IncorrectFormat": "Formato incorrecto",
-  "Error.ChooseYourService": "Elige un servicio",
+  "Error.ChooseYourService": "Servicio no esta seleccionado",
   "Error.Empty": "No puede estar vacio",
   "Next": "Siguente",
   "FullName": "Nombre completo",
@@ -11,5 +11,14 @@
   "Minute": "min.",
   "Spanish": "Español",
   "English": "Ingles",
-  "Ukranian": "Ucraniano"
+  "Ukranian": "Ucraniano",
+  "ChooseYourService": "Elige un servicio",
+  "Service": "Servicio",
+  "ReceiveNotifications": "Recibir notificaciones",
+  "Close": "Cerrar",
+  "Modal.YouHaveAppointments": "Usted ya tiene una cita",
+  "Modal.Accept": "Aceptar",
+  "Appointment.Confirmed": "Confirmado",
+  "Appointment.UnConfirmed": "No confirmado",
+  "GoBack": "Atras"
 }

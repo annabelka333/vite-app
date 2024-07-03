@@ -56,7 +56,7 @@ export default function UserForm({callback}) {
       <form
         autoComplete="true"
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border"
       >
         <FormField
           errorText={'fullName' in errors ? errors['fullName'] : ''}
@@ -87,12 +87,12 @@ export default function UserForm({callback}) {
           type={'phone'}
           placeholder={'654 776 667'}
         />
-        <div className="inline-block relative w-64 mt-6">
+        <div className="mt-6">
           <label
             className="block text-gray-700 text-left font-bold mb-2"
             htmlFor="appointment"
           >
-            {t('ChooseYourService')}
+            {t('Service')}
           </label>
           {
             services ? (
@@ -101,8 +101,8 @@ export default function UserForm({callback}) {
                   name='service'
                   value={formValues.service}
                   onChange={(event) => handleChange(event.target.name, event.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                  <option value={''}>None</option>
+                  className="bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                  <option value={''}>{t('ChooseYourService')}</option>
                   {
                     services.items.map(service => (
                       <option key={service._id} value={service._id}>{service.name} - {service.price}€ ( {service.duration}{t('Minute')} )</option>
@@ -116,14 +116,13 @@ export default function UserForm({callback}) {
             ) : null
           }
         </div>
-        <div>
+        <div className='my-4'>
           <input type='checkbox' checked={formValues.receiveNotification} name='receiveNotification' onChange={checkBoxHandler}/>
-          <label htmlFor="receiveNotification">{t('ReceiveNotifications')}</label>
+          <label htmlFor="receiveNotification" className='ml-2'>{t('ReceiveNotifications')}</label>
         </div>
-        <hr />
         <button
           type="submit"
-          className='text-white font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 bg-blue-600 hover:bg-blue-800 focus:ring-4'
+          className='text-white w-full font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 bg-blue-600 hover:bg-blue-800 focus:ring-4'
         >
           {t('Next')}
         </button>

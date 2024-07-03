@@ -2,7 +2,7 @@
   "Error.ItsTooShort": "Занадто короткий",
   "Error.ItsTooLong": "Це занадто довго",
   "Error.IncorrectFormat": "Неправильний формат",
-  "Error.ChooseYourService": "Оберіть свій сервіс",
+  "Error.ChooseYourService": "Сервіс не вибрано",
   "Error.Empty": "Не може бути порожнім",
   "Next": "Далі",
   "FullName": "Повна назва",
@@ -11,5 +11,14 @@
   "Minute": "хв",
   "Spanish": "Іспанська",
   "English": "Англійська",
-  "Ukranian": "Українська"
+  "Ukranian": "Українська",
+  "ChooseYourService": "Оберіть свій сервіс",
+  "Service": "Сервіс",
+  "ReceiveNotifications": "Отримувати повідомлення",
+  "Close": "Закрити",
+  "Modal.YouHaveAppointments": "У вас вже є зустрічі",
+  "Modal.Accept": "Прийняти",
+  "Appointment.Confirmed": "Підтверджено",
+  "Appointment.UnConfirmed": "Непідтверджено",
+  "GoBack": "Назад"
 }
