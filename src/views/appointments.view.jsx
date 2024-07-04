@@ -19,13 +19,16 @@ const AppointmentsView = () => {
     );
   }
 
+  if(loading){
+    return <Loader />;
+  }
 
   return (
     <>
-      <h1 className='page-title'>Calendar Page</h1>
-      {
-        loading ? <Loader /> : <Calendar />
-      }
+      <h1 className='page-title'>Hello, {user.fullName}</h1>
+
+      <p>Pick your appointment for {selectedService.name}</p>
+      <Calendar />
     </>
   );
 };

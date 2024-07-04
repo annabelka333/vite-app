@@ -15,7 +15,13 @@ export const appContext = createContext({
   selectedService: undefined,
   showCalendar: false,
   setUserData: () => undefined,
-  pickService: () => undefined
+  pickService: () => undefined,
+  showInfoModal: false,
+  closeModalHandler: () => undefined,
+  modalHandler: () => undefined,
+  modalTitle: undefined,
+  modalContent: undefined,
+  hideCalendar: () => undefined
 });
 
 export function useAppContext() {
@@ -37,7 +43,11 @@ export function useProvideAppContext() {
     user: undefined,
     selectedService: undefined,
     loading: true,
+    showInfoModal: false,
     showCalendar: false,
+    modalTitle: null,
+    modalContent: null,
+    modalType: null
   });
 
   const intitDataLoading = useCallback(async () => {
@@ -57,18 +67,32 @@ export function useProvideAppContext() {
 
   }, []);
 
-  const confirmUserData = (data) => {
-    const {service, ...user} = data;
-    localStorage.setItem(USERIDSTORAGE, user.uid);
-    setState({...state, user: user, selectedService: service, showCalendar: true});
-  };
-
   useEffect(() => {
     intitDataLoading();
   }, []);
 
+  const confirmUserData = (data) => {
+    const {service, ...user} = data;
+    localStorage.setItem(USERIDSTORAGE, user.uid);
+    const serviceData = state.services.items.find(el => el._id === service);
+    setState({...state, user: user, selectedService: serviceData, showCalendar: true});
+  };
+
+  const closeModalHandler = () => {
+    setState({...state, showInfoModal: false, modalContent: null, modalTitle: null});
+  };
+
+  const modalHandler = ({ title, content }) => {
+    setState({...state, showInfoModal: true, modalContent: content, modalTitle: title});
+  };
+
+  const hideCalendar = () => setState({...state, showCalendar: false});
+
   return {
     ...state,
-    confirmUserData
+    confirmUserData,
+    closeModalHandler,
+    modalHandler,
+    hideCalendar
   };
 }

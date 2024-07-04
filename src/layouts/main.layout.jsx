@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import LangComponent from '../components/LangComponent';
+import InfoModal from '../containers/modal/info.modal';
 function MainLayout () {
   //TODO: create greeting components, footer and header component 
 
@@ -16,6 +17,7 @@ function MainLayout () {
       <footer>
         Developed by Anna V.
       </footer>
+      <InfoModal />
     </>
   );
 }
