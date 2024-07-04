@@ -39,15 +39,15 @@ const LangComponent = () => {
         onClick={toggleDropdown}
       >
         {t(currentLanguageLabel).substring(0, 3)}
-        <DropDownIcon />
+        < DropDownIcon />
       </button>
       {isOpen && (
         <ul
-          className="origin-top-right absolute right-4 top-full z-10 mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="origin-top-right absolute right-4 top-full z-10 mt-2 w-56 rounded-md bg-white shadow-lf ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-labelledby="menu-button"
         >
-          {Object.keys(LOCALE).map(key => (
+          {Object.keys(LOCALE).map((key) => (
             <li
               className={`cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full ${
                 key === currentLanguageCode ? 'bg-green-100' : ''
