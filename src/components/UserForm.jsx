@@ -4,6 +4,7 @@ import FormField from './FormField';
 import userValidation from '../validations/user.validation';
 import { useAppContext } from '../context/app.context';
 import { useTranslation } from 'react-i18next';
+import Button from './Button';
 
 export default function UserForm({callback}) {
   const {t} = useTranslation();
@@ -120,12 +121,12 @@ export default function UserForm({callback}) {
           <input type='checkbox' checked={formValues.receiveNotification} name='receiveNotification' onChange={checkBoxHandler}/>
           <label htmlFor="receiveNotification" className='ml-2'>{t('ReceiveNotifications')}</label>
         </div>
-        <button
+        <Button
           type="submit"
           className='text-white w-full font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 bg-blue-600 hover:bg-blue-800 focus:ring-4'
         >
           {t('Next')}
-        </button>
+        </Button>
       </form>
     </div>
   );
