@@ -4,13 +4,12 @@ import InfoModal from '../containers/modal/info.modal';
 import Header from '../components/Header';
 
 function MainLayout () {
-  //TODO: create greeting components, footer and header component 
+  //TODO: create greeting components, footer 
 
   return (
     <>
         <Header />
         <LangComponent />
-   
       <main>
         <div className='container'>
           <Outlet/>
