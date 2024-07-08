@@ -69,3 +69,40 @@ export function parseToken (token) {
 
   return JSON.parse(jsonPayload);
 }
+
+
+export function fillArray (num){
+  const arr = [];
+  for(let i = 1; i <= num; i++){
+    arr.push(i);
+  }
+  return arr;
+}
+
+export function getFreeTimeFromDay(){
+  return false;
+}
+
+export function fillMonth(){
+  const month = {};
+  const date = new Date();
+  const yy = date.getFullYear();
+  const mm = date.getMonth();
+  const dd = date.getDate();
+  const daysInMonth = (new Date(yy, mm + 1, 0)).getDate();
+  const monthDayStart = (new Date(yy, mm, 1)).getDay();
+  const diff = 7 - monthDayStart;
+
+  console.log(diff)
+
+  for(let i = dd; i <= daysInMonth; i++){
+    const today = new Date(yy, mm, i);
+    const result = null;
+
+    Object.assign(month, {[i]: result});
+  }
+
+
+  
+  return month;
+}

@@ -1,22 +1,20 @@
 import { Outlet } from 'react-router-dom';
-import LangComponent from '../components/LangComponent';
 import InfoModal from '../containers/modal/info.modal';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
 function MainLayout () {
-  //TODO: create greeting components, footer and header component 
+
 
   return (
     <>
-      <header>
-        <LangComponent />
-      </header>
+      <Header />
       <main>
         <div className='container'>
           <Outlet/>
         </div>
       </main>
-      <footer>
-        Developed by Anna V.
-      </footer>
+      <Footer />
       <InfoModal />
     </>
   );

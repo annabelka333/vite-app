@@ -2,6 +2,7 @@ import Calendar from '../components/Calendar';
 import Loader from '../components/loader';
 import { useAppContext } from '../context/app.context';
 import { useAppointments } from '../hooks/useAppointments.hook';
+import { fillMonth } from '../utils/commons';
 
 const AppointmentsView = () => {
   const {loading, appointments} = useAppointments();
@@ -23,12 +24,15 @@ const AppointmentsView = () => {
     return <Loader />;
   }
 
+  const month = fillMonth();
+
+  console.log(month);
   return (
     <>
       <h1 className='page-title'>Hello, {user.fullName}</h1>
 
       <p>Pick your appointment for {selectedService.name}</p>
-      <Calendar />
+      <Calendar data={appointments}/>
     </>
   );
 };

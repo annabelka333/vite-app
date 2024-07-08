@@ -2,44 +2,44 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LOCALE } from '../utils/constants';
 import { ChevronLeftIcon, ChevronRightIcon } from './icons/icons';
+import { fillArray, getFreeTimeFromDay } from '../utils/commons';
 
-const Calendar = () => {
+const DATE = new Date();
+const MONTH = DATE.getMonth();
+const YEAR = DATE.getFullYear();
+const DAY = DATE.getDate(); 
+
+const Calendar = ({ data }) => {
   const {i18n} = useTranslation();
-
   const [date, setDate] = useState(new Date);
+
 
   const MM = date.getMonth();
   const YY = date.getFullYear();
   const DD = date.getDate();
 
   const daysInMonth = (new Date(YY, MM + 1, 0)).getDate();
-
   const monthDayStart = (new Date(YY, MM, 1)).getDay();
-  const columnStart = monthDayStart === 0 ? 7 : monthDayStart;
 
-  console.log('Start in: ', monthDayStart);
+  const availableMonthDays = useMemo(()=>fillArray(daysInMonth),[daysInMonth]);
+  const blockedMonthDays = useMemo(()=>fillArray(monthDayStart),[monthDayStart]);
 
-  const allDays = useMemo(()=>{
-    const all = [];
-
-    for(let i = 1; i <= daysInMonth; i++){
-      all.push(i);
-    }
-    return all;
-  },[date]);
 
   const changeDateHandler = (num) => {
     const mm = date.getMonth();
     const year = date.getFullYear();
     const day = date.getDate();
-
-    setDate(new Date(year, mm + num, day));
+    const next = mm + num;
+    if(next >= MONTH){
+      setDate(new Date(year, next, day));
+    }
   };
+
 
   return (
     <div className=' max-w-96'>
       <div className='flex flex-row items-center justify-between'>
-        <button className='py-1 uppercase cursor-pointer px-2 m-1 text-sm text-slate-400' onClick={()=>changeDateHandler(-1)}>
+        <button className={`${MM > MONTH ? 'text-sky-400 cursor-pointer' : 'text-slate-200 cursor-default'} py-1 uppercase px-2 m-1 text-sm `} onClick={()=>changeDateHandler(-1)}>
           <ChevronLeftIcon />
         </button>
         {
@@ -49,7 +49,7 @@ const Calendar = () => {
             day: 'numeric',
           })
         }
-        <button className='py-1 uppercase cursor-pointer px-2 m-1 text-sm text-slate-400' onClick={()=>changeDateHandler(1)}>
+        <button className='py-1 uppercase cursor-pointer px-2 m-1 text-sm text-sky-400' onClick={()=>changeDateHandler(1)}>
           <ChevronRightIcon />
         </button>
       </div>
@@ -63,31 +63,76 @@ const Calendar = () => {
         }
         
       </div>
-      <div className="grid grid-cols-7 calendar-shadow">      
+      <div className="grid grid-cols-7 calendar-shadow">
         {
-          allDays.map(day => {
-            return (
-              <div 
-                key={day} 
-                className={`${DD === day ? 'text-white hover:text-white' : ''} text-slate-400 w-12 h-12 cursor-pointer my-1 rounded-sm hover:bg-slate-50 flex items-center justify-center`}
-                style={{gridColumnStart: day === 1 ? columnStart : null}}
-              >
-                <span className={`${DD === day ? 'bg-slate-800':''} align-middle w-10 h-10 inline rounded-3xl flex items-center justify-center text-lg`}>
-                  {day}
-                </span>
-              </div>
-            );
-          })
+          blockedMonthDays.map(prev => <div key={prev}></div>)
+        }
+        {
+          availableMonthDays.map(day => (
+            <Day 
+              key={day}
+              d={day}
+              m={MM}
+              y={YY} 
+            />
+          ))
         }
       </div>
     </div>
   );
 };
 
+const Day = ({d, m, y}) => {
+  const isBlocked = getFreeTimeFromDay();
+  //Check if its a current day and month
+  const isCurrentDay = d === DAY && m === MONTH;
+  //Chack if this is a future day;
+  const isAvailable = d > DAY && m >= MONTH;
+
+  const clickHandler = () => {
+    console.log(new Date(y, m, d));
+  };
+
+  const cl = {
+    width: 'w-12',
+    height: 'h-12',
+    margin: 'my-1',
+    borderRadius: 'rounded-sm',
+    hover: 'hover:bg-slate-50',
+    display: 'flex',
+    itemsFlex: 'items-center',
+    justifyFlex: 'justify-center',
+    color: 'text-slate-200',
+    cursor: 'cursor-default'
+  };
+
+  if(isAvailable){
+    cl.color = 'text-slate-400';
+    cl.cursor = 'cursor-pointer';
+  }
+
+  if(isCurrentDay){
+    cl.color = 'text-white';
+  }
+
+  const classes = `w-12 h-12 my-1 rounded-sm hover:bg-slate-50 flex items-center justify-center ${Object.values(cl).join(' ')}`;
+
+  return (
+    <div 
+      className={classes}
+      onClick={clickHandler}
+    >
+      <span className={`${isCurrentDay ? 'bg-slate-800':''} align-middle w-10 h-10 inline rounded-3xl flex items-center justify-center text-lg`}>
+        {d}
+      </span>
+    </div>
+  );
+};
+
 const weekDays = {
-  es: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
-  en: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-  ua: ['Пн','Вт','Ср','Чт','Пт','Сб','Нд']
+  es: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+  en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  ua: ['Нд', 'Пн','Вт','Ср','Чт','Пт','Сб']
 };
 
 export default Calendar;
