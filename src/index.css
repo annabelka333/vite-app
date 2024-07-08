@@ -12,6 +12,7 @@
   
   main{
     flex-grow: 1;
+    display: flex;
   }
   
   * {
@@ -21,7 +22,7 @@
 
 @layer components {
   .container {
-    @apply max-w-7xl mx-auto pt-8;
+    @apply max-w-7xl mx-auto px-4 flex flex-1;
   }
 
   .page-title{

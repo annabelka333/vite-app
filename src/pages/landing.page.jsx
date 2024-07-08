@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../context/app.context';
 import CalendarView from '../views/appointments.view';
 import UserInfoView from '../views/user-info.view';
+import Button from '../components/Button';
 
 const LandingPage = () => {
   const {t} = useTranslation();
@@ -9,15 +10,20 @@ const LandingPage = () => {
 
   if(showCalendar){
     return (
-      <div>
-        <button onClick={hideCalendar} className='py-1 px-4 uppercase bg-neutral-200 rounded-md'>{t('GoBack')}</button>
+      <Wrapper>
+        <Button onClick={hideCalendar}>{t('GoBack')}</Button>
         <CalendarView />
-      </div>
+      </Wrapper>
     );
   }
 
   return (
-    <UserInfoView />
+    <Wrapper>
+      <UserInfoView />
+    </Wrapper>
   );
 };
+
+const Wrapper = ({ children }) => <div className='flex items-center justify-center flex-1'>{children}</div>;
+
 export default LandingPage;
